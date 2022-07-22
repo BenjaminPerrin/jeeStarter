@@ -58,7 +58,7 @@ public class FirstServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //super.doGet(request, response);
-//        response.sendRedirect("FirstServlet.html");
+        //this.getServletContext().getRequestDispatcher("/FirstServlet.html").forward(request, response);
             response.sendRedirect("SecondServlet");
 
 
