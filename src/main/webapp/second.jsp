@@ -8,9 +8,11 @@
 <!DOCTYPE html>
 <html>
     <jsp:include page="/include/header.jsp">
-	<jsp:param name="title" value="New JSP title Second"/>
+	<jsp:param name="title" value="New JSP title"/>
     </jsp:include>
     <body>
         <h1>Ceci est ma deuxieme page JSP</h1>
+        <h1>Au revoir ${param.name} !</h1>
+
     </body>
 </html>

@@ -8,6 +8,10 @@
         <servlet-name>SecondServlet</servlet-name>
         <servlet-class>fr.m2i.javawebapp.SecondServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShowIPAdress</servlet-name>
+        <servlet-class>fr.m2i.javawebapp.ShowIPAdress</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FirstServlet</servlet-name>
         <url-pattern>/FirstServlet</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>SecondServlet</servlet-name>
         <url-pattern>/SecondServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowIPAdress</servlet-name>
+        <url-pattern>/ShowIPAdress</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

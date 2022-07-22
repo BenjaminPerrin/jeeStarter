@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  *
  * @author ben
  */
-public class SecondServlet extends HttpServlet {
+public class ShowIPAdress extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -29,12 +30,13 @@ public class SecondServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String ip = request.getRemoteAddr();  
         String name = request.getParameter("name");
-        response.getWriter().write(name);
+        request.setAttribute("ip",ip);
+        request.setAttribute("name",name);
+
             //response.sendRedirect("index.html");
-            this.getServletContext().getRequestDispatcher("/second.jsp").forward(request, response);
-
-
+            this.getServletContext().getRequestDispatcher("/showIpAdress.jsp").forward(request, response);
     }
 
     /**
@@ -48,7 +50,8 @@ public class SecondServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                super.doGet(request, response);
+                        super.doGet(request, response);
+
     }
 
     /**

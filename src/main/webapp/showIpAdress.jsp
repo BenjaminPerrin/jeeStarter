@@ -12,7 +12,7 @@
     </jsp:include>
     <body>
         <h1>Ceci est ma premiere page JSP</h1>        
-        <h1>Bonjour ${param.name} !</h1>
+        <h1>Bonjour ${name} ton ip est: ${ip} !</h1>
 
     </body>
 </html>
