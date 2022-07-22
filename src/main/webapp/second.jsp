@@ -7,7 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <jsp:include page="/include/header.jsp"/>
+    <jsp:include page="/include/header.jsp">
+	<jsp:param name="title" value="New JSP title Second"/>
+    </jsp:include>
     <body>
         <h1>Ceci est ma deuxieme page JSP</h1>
     </body>

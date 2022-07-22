@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <jsp:include page="/include/header.jsp">
-	<jsp:param name="title" value="New JSP title"/>
+	<jsp:param name="title" value="New JSP title First"/>
     </jsp:include>
     <body>
         <h1>Ceci est ma premiere page JSP</h1>
