@@ -34,16 +34,25 @@ public class ShowRequestHeaders extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             //super.doGet(request, response);
-            Enumeration<String> headersName = request.getHeaderNames();
-            List<String> headerNameList = new ArrayList();
-            List<String> headerValueList = new ArrayList();
-    while(headersName.hasMoreElements()){
-        String name = headersName.nextElement();
-        headerNameList.add(name);      
-        headerValueList.add(request.getHeader(name));
+     // On récupère la collection des noms des headers contenues dans la requête
+        Enumeration<String> headersName = request.getHeaderNames();
 
-    }
-    // On passe par des attributs pour les utiliser côté JSP
+        // On créer deux liste que l'on va pouvoir manipuler dans le jsp de façon simple
+        List<String> headerNameList = new ArrayList();
+        List<String> headerValueList = new ArrayList();
+
+        // On parcours la collection -> tant qu'il y a des éléments dans la collection
+        while (headersName.hasMoreElements()) {
+            // On stock l'élément courant (le nom du header) et on décale le curseur de 1
+            String name = headersName.nextElement();
+
+            // On ajoute le nom du header
+            headerNameList.add(name);
+            // On ajoute la valeur du header
+            headerValueList.add(request.getHeader(name));
+        }
+
+        // On passe par des attributs pour les utiliser côté JSP
         request.setAttribute("headersName", headerNameList);
         request.setAttribute("headersValue", headerValueList);
         this.getServletContext().getRequestDispatcher("/showRequestHeaders.jsp").forward(request, response);

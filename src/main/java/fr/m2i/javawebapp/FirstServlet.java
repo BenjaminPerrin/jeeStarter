@@ -55,13 +55,10 @@ public class FirstServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
-        response.getWriter().write(name);
-//?name=bob
-        this.getServletContext().getRequestDispatcher("/first.jsp").forward(request, response);
-            //response.sendRedirect("SecondServlet");
+            this.getServletContext().getRequestDispatcher("/first.jsp").forward(request, response);
 
 
     }
