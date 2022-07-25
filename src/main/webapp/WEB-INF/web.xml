@@ -28,6 +28,18 @@
         <servlet-name>CountWordServlet</servlet-name>
         <servlet-class>fr.m2i.javawebapp.CountWordServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PrimeCheck</servlet-name>
+        <servlet-class>fr.m2i.javawebapp.PrimeCheck</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PrimeNumberServlet</servlet-name>
+        <servlet-class>fr.m2i.javawebapp.PrimeNumberServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PrimeNumberListServlet</servlet-name>
+        <servlet-class>fr.m2i.javawebapp.PrimeNumberListServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FirstServlet</servlet-name>
         <url-pattern>/FirstServlet</url-pattern>
@@ -51,6 +63,18 @@
     <servlet-mapping>
         <servlet-name>CountWordServlet</servlet-name>
         <url-pattern>/CountWordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrimeCheck</servlet-name>
+        <url-pattern>/PrimeCheck</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrimeNumberServlet</servlet-name>
+        <url-pattern>/PrimeNumberServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrimeNumberListServlet</servlet-name>
+        <url-pattern>/PrimeNumberListServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
