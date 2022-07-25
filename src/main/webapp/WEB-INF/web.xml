@@ -12,6 +12,10 @@
         <servlet-name>ShowIPAdress</servlet-name>
         <servlet-class>fr.m2i.javawebapp.ShowIPAdress</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShowRequestHeaders</servlet-name>
+        <servlet-class>fr.m2i.javawebapp.ShowRequestHeaders</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FirstServlet</servlet-name>
         <url-pattern>/FirstServlet</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>ShowIPAdress</servlet-name>
         <url-pattern>/ShowIPAdress</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowRequestHeaders</servlet-name>
+        <url-pattern>/ShowRequestHeaders</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
