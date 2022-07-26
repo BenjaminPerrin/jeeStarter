@@ -5,24 +5,23 @@
 package fr.m2i.javawebapp;
 
 import fr.m2i.javawebapp.distributeur.Distributeur;
+import fr.m2i.javawebapp.distributeur.OutOfStockException;
 import fr.m2i.javawebapp.distributeur.Produit;
+import fr.m2i.javawebapp.distributeur.negativeParam;
+
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author ben
- */
 public class Distrib extends HttpServlet {
-        
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
+    private final Distributeur distributeur = Distributeur.getInstance();   
+
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -34,13 +33,8 @@ public class Distrib extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Distributeur distributeur = Distributeur.getInstance();
-        int credit = distributeur.getCredit();
-        List<Produit> stock = distributeur.getStock();
-        request.setAttribute("stock",stock);
-        request.setAttribute("credit",credit);
-            this.getServletContext().getRequestDispatcher("/WEB-INF/distrib.jsp").forward(request, response);
-
+        setDistributorAttribute(request);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/distrib.jsp").forward(request, response);
     }
 
     /**
@@ -54,51 +48,75 @@ public class Distrib extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            Distributeur distributeur = Distributeur.getInstance();
-            List<Produit> stock = distributeur.getStock();
-            //add credit +1 +2
+        Map<String, String> messages = new HashMap<String, String>();
+        
+        addCredit(request);
+        try {
+           buyProduct(request);
+        } catch (OutOfStockException e) {
+//            System.out.println(e);
+            messages.put("buyProduct", e.getMessage());
+        }
+        
+        try {
+             AddSelectedMoney(request);
+        } catch (negativeParam e) {
+//            System.out.println(e);
+            messages.put("AddSelectedMoney", e.getMessage());
+        }
 
-             if (request.getParameter("onecredit") != null) {
-                distributeur.insererArgent(1);
-            } else if(request.getParameter("twocredit") != null) {
-                distributeur.insererArgent(2);
+        setDistributorAttribute(request);
+        request.setAttribute("messages", messages);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/distrib.jsp").forward(request, response);
+    }
+
+    private void addCredit(HttpServletRequest request) {
+        Map<String, String> messages = new HashMap<String, String>();
+        request.setAttribute("messages", messages);
+        String addOne = request.getParameter("addOne");
+        String addTwo = request.getParameter("addTwo");
+
+        if (addOne == null && addTwo == null) {
+            messages.put("addCredit", "veuillez entrer un nombre");
+            return;
+        }
+
+        int amount = addOne != null ? 1 : 2;
+
+        distributeur.insererArgent(amount);
+        // distributeur.setCredit(distributeur.getCredit() + amount);
+    }
+    
+    private void buyProduct(HttpServletRequest request)throws OutOfStockException {
+
+        String productId = request.getParameter("productId");
+
+        if (productId == null || "".equals(productId)) {
+            return;
+        }
+        if(!distributeur.stockSuffisant(Integer.parseInt(productId))){
+            throw new OutOfStockException("l'item n'est plus en stock");
+
+        }
+        distributeur.commanderProduit(Integer.parseInt(productId));
+    }
+    private void AddSelectedMoney(HttpServletRequest request) throws negativeParam{
+        String addCredit = request.getParameter("addCredit");
+        if(addCredit != null){
+            if(Integer.parseInt(addCredit) < 0){
+                throw new negativeParam("Veuillez entrez un nombre positif");
             }
-            int credit = distributeur.getCredit();
-            //achat item
-            if (request.getParameter("id") != null) {
-                int itemToBuy = Integer.parseInt(request.getParameter("id"));
-                distributeur.commanderProduit(itemToBuy);
-            }
-            //add credit
-            
-            Map<String, String> messages = new HashMap<String, String>();
-            request.setAttribute("messages", messages);
-//            if (request.getParameter("addCredit") != null) {
-//                try {
-//                    int addCredit = Integer.parseInt(request.getParameter("addCredit"));
-//                    distributeur.insererArgent(addCredit);
-//                } catch (Exception e) {
-//                messages.put("addCredit", e.toString());
-//                }
-//            }
-//            if (Integer.parseInt(request.getParameter("addCredit")) < 0) {
-//            throw new ServletException("veuillez entrer un nombre positif");
-//           }
-//else if (!request.getParameter("addCredit").matches("\\d+")) {
-//            messages.put("addCredit", "veuillez entrer un nombre entier");
-//            }
+
+        distributeur.insererArgent(Integer.parseInt(addCredit));
+        }
+        
 
 
-            if (request.getParameter("addCredit") != null) {
-                int addCredit = Integer.parseInt(request.getParameter("addCredit"));
-                distributeur.insererArgent(addCredit);
-            }
-            
-            request.setAttribute("stock",stock);
-            request.setAttribute("credit",distributeur.getCredit());
-            
-            this.getServletContext().getRequestDispatcher("/WEB-INF/distrib.jsp").forward(request, response);
+    }
 
+    private void setDistributorAttribute(HttpServletRequest request){
+        request.setAttribute("credit", distributeur.getCredit());
+        request.setAttribute("stock", distributeur.getStock());
     }
 
     /**
@@ -109,6 +127,6 @@ public class Distrib extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }
