@@ -40,6 +40,14 @@
         <servlet-name>PrimeNumberListServlet</servlet-name>
         <servlet-class>fr.m2i.javawebapp.PrimeNumberListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Distributeur</servlet-name>
+        <servlet-class>fr.m2i.javawebapp.distributeur.Distributeur</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Distrib</servlet-name>
+        <servlet-class>fr.m2i.javawebapp.Distrib</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FirstServlet</servlet-name>
         <url-pattern>/FirstServlet</url-pattern>
@@ -75,6 +83,14 @@
     <servlet-mapping>
         <servlet-name>PrimeNumberListServlet</servlet-name>
         <url-pattern>/PrimeNumberListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Distributeur</servlet-name>
+        <url-pattern>/Distributeur</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Distrib</servlet-name>
+        <url-pattern>/Distrib</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
