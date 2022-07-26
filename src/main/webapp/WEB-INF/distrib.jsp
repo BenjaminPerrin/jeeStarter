@@ -22,10 +22,10 @@
          </tr>
            <c:forEach items="${stock}" var="items">
                <tr>
-                   <td>${items.id}</td>                   
-                   <td>${items.nom}</td>
-                   <td>${items.quantite}</td>
-                   <td>${items.prix}</td>
+                   <td><c:out value="${items.getId()}"/></td>
+                    <td><c:out value="${items.getNom()}"/></td>
+                    <td><c:out value="${items.getQuantite()}"/></td>
+                    <td><c:out value="${items.getPrix()}"/></td>
                </tr>
            </c:forEach>             
        </table> 
@@ -41,7 +41,16 @@
         <fieldset>
          <legend>Acheter un item</legend>
          numero de l'item: <input type="text" name="id" required>
-         <button type="submit" name="submit">Acheter</button>         
+         <button type="submit" name="submit">Acheter</button>
+        <span class="error">${messages.id}</span>         
+        </fieldset>
+        </form>
+        <form method="POST">
+        <fieldset>
+         <legend>Ajouter du credit</legend>
+         combien de credit a ajouter?: <input type="text" name="addCredit" required>
+         <button type="submit" name="submit">Ajouter</button> 
+         <span class="error">${messages.addCredit}</span>
         </fieldset>
         </form>
     </body>

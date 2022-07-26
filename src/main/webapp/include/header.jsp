@@ -8,5 +8,6 @@
 <!DOCTYPE html>
     <head>
         <title>${param.title}</title>
+        <style>.error { color: red; } .success { color: green; }</style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
