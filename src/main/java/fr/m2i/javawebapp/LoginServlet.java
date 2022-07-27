@@ -1,7 +1,7 @@
 package fr.m2i.javawebapp;
 
 import fr.m2i.javawebapp.session.User;
-import fr.m2i.javawebapp.session.userDb;
+import fr.m2i.javawebapp.session.UserDb;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +36,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        // on recupere notre userDb depuis les attributs du servlet context (cree dans le lifecycleListener)
+        UserDb userDb= (UserDb) this.getServletContext().getAttribute("userDb");
         // On récupère les paramètres du formulaire
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -60,7 +61,7 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("user", user);
 
         // On affiche la page welcome
-        this.getServletContext().getRequestDispatcher("/WEB-INF/welcome.jsp").forward(request, response);
+        response.sendRedirect("/java-web-app/HomeServlet");
     }
 
     /**
