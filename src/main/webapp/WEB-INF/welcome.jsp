@@ -13,4 +13,5 @@
     <body>
         <h1>Bonjour ${sessionScope.email} vous etes un ${sessionScope.role}</h1>
     </body>
+    <a href="LogoutServlet">logout</a>
 </html>
