@@ -1,25 +1,30 @@
-<%-- 
-    Document   : login
-    Created on : 27 juil. 2022, 09:44:20
-    Author     : ben
---%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <jsp:include page="/include/header.jsp">
-        <jsp:param name="title" value="first java login" />
+        <jsp:param name="title" value="Page de connexion" />
     </jsp:include>
     <body>
-        <h1>Login</h1>
+
         <form method="POST">
             <fieldset>
-                <legend>Login</legend>
-                email<input type="email" name="email" required>                
-                password<input type="password" name="password" required>
-                <button type="submit" name="submit">login</button> 
-                <span class="error">${messages.login}</span>
+                <legend>Formulaire de connexion</legend>
+                <p>
+                    <label>Email : </label>
+                    <input type="text" name="email" placeholder="email@email.com" required />
+
+                    <br />
+                    
+                    <label>Mot de passe : </label>
+                    <input type="password" name="password" required />
+                </p>
+                <input type="submit" value="Connexion" />
             </fieldset>
+            <c:if test="${error != null}">
+                <p style="color:red;"><c:out value="${error}" /></p>
+            </c:if>
         </form>
+
     </body>
 </html>

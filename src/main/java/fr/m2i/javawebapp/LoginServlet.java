@@ -1,29 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package fr.m2i.javawebapp;
 
 import fr.m2i.javawebapp.session.User;
 import fr.m2i.javawebapp.session.userDb;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author ben
- */
 public class LoginServlet extends HttpServlet {
 
-   
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -49,40 +36,33 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        if (request.getParameter("email") != null && request.getParameter("password") != null) {
-            System.out.println("Good");
-            login(request);
-        this.getServletContext().getRequestDispatcher("/WEB-INF/welcome.jsp").forward(request, response);       
 
-        }else{
-                this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-
-        }
-
-
-    }
-    public void login(HttpServletRequest request)
-        {
-        Map<String, String> messages = new HashMap<String, String>();
-
+        // On récupère les paramètres du formulaire
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        if (userDb.checkUser(email, password) == null) {
-                    messages.put("login", "Erreur email ou mdp");
-                    return;
-            }
-        request.setAttribute("messages", messages);
-        userDb.checkUser(email, password);
-        User user = userDb.checkUser(email, password);
-        HttpSession session = request.getSession();
-        session.setAttribute("email", user.getEmail());        
-        session.setAttribute("role", user.getRole());
 
-        //request.setAttribute("email", user.getEmail());
-        //request.setAttribute("role", user.getRole());
-           System.out.println("Good in login");
+        // On vérifie dans notre base de donnée qu'un user existe avec les identifiants envoyés
+        User user = userDb.checkUser(email, password);
+
+        // Si le user est null, les identifiants sont invalides
+        // On set le message d'erreur et on affiche la page de login
+        if (user == null) {
+            request.setAttribute("error", "Veuillez vérifier vos identifiants !");
+            this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            return; // on arrête la méthode ici
+        }
+
+        // Si on arrive ici c'est que le user est différent de null -> on la trouver dans notre base de donnée
+        
+        // On créer une nouvelle session avec le paramètre true
+        HttpSession session = request.getSession(true);
+        // On stock le user connecter dans la session
+        session.setAttribute("user", user);
+
+        // On affiche la page welcome
+        this.getServletContext().getRequestDispatcher("/WEB-INF/welcome.jsp").forward(request, response);
     }
+
     /**
      * Returns a short description of the servlet.
      *
@@ -91,6 +71,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

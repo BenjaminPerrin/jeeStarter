@@ -1,17 +1,15 @@
-<%-- 
-    Document   : welcome
-    Created on : 27 juil. 2022, 09:45:17
-    Author     : ben
---%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <jsp:include page="/include/header.jsp">
-        <jsp:param name="title" value="first java login/welcome" />
+        <jsp:param name="title" value="Page d'accueil" />
     </jsp:include>
     <body>
-        <h1>Bonjour ${sessionScope.email} vous etes un ${sessionScope.role}</h1>
+        <h1>Bonjour <c:out value="${sessionScope.user.email}"/>, vous etes un <c:out value="${sessionScope.user.role}"/> ! </h1>
+        
+        <br />
+
+        <a href="LogoutServlet" >Déconnexion</a>
     </body>
-    <a href="LogoutServlet">logout</a>
 </html>
